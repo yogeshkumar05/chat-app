@@ -14,7 +14,7 @@ const {
 const app = express();
 const server = http.createServer(app);
 
-const port = process.env.port || 3001;
+const port = process.env.PORT || 3000;
 
 const io = socketio(server);
 
