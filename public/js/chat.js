@@ -39,7 +39,7 @@ const autoscroll = () => {
   // how far have I scrolled?
   const scrollOffset = $messages.scrollTop + visibleHeight;
 
-  if(containerHeight - newMessageHeight <= scrollOffset) {
+  if (containerHeight - newMessageHeight <= scrollOffset) {
     $messages.scrollTop = containerHeight;
   }
 
@@ -48,7 +48,6 @@ const autoscroll = () => {
 
 // render messages
 socket.on('message', (message) => {
-  console.log(message);
   const html = Mustache.render(messageTemplate, {
     username: message.username,
     message: message.text,
@@ -60,7 +59,6 @@ socket.on('message', (message) => {
 
 // render location messages
 socket.on('locationMessage', (message) => {
-  console.log(message);
   const html = Mustache.render(locationMessageTemplate, { username: message.username, url: message.url, createdAt: moment(message.createdAt).format('h:mm a') });
   $messages.insertAdjacentHTML('beforeend', html);
   autoscroll();
@@ -68,8 +66,6 @@ socket.on('locationMessage', (message) => {
 
 // render users list
 socket.on('roomData', ({ room, users }) => {
-  console.log('room', room);
-  console.log('users', users);
   const html = Mustache.render(sidebarTemplate, {
     room,
     users
@@ -83,7 +79,6 @@ document.querySelector('#message-form').addEventListener('submit', (e) => {
   // const message = document.querySelector('input').value;
   const message = e.target.elements.message.value;
   socket.emit('sendMessage', message, (response) => {
-    console.log(response);
     $messageFormButton.removeAttribute('disabled');
     $messageFormInput.value = '';
     $messageFormInput.focus();
@@ -97,9 +92,7 @@ $sendLocationButton.addEventListener('click', () => {
     return alert('Geolocation is not supported by your browser');
   }
   $sendLocationButton.setAttribute('disabled', 'disabled');
-  console.log('Fetching location ........');
   navigator.geolocation.getCurrentPosition((position) => {
-    console.log('Position ', position.coords);
     socket.emit('sendLocation', {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude

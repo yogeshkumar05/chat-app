@@ -32,7 +32,7 @@ const removeUser = (id) => {
   // users.filter((user) => user.id === id); // keeps running even after a match is found
 
   const index = users.findIndex((user) => user.id === id);
-  if(index !== -1) {
+  if (index !== -1) {
     return users.splice(index, 1)[0];
   }
 }
@@ -47,7 +47,7 @@ const getUsersInRoom = (room) => {
 
 }
 
-module.exports ={
+module.exports = {
   addUser,
   removeUser,
   getUser,
