@@ -1,3 +1,5 @@
 # chat-app
 
-Deployed at https://yk-chat-app.herokuapp.com/
+Realtime chat application developed using NodeJS and WebSockets.
+
+Application is deployed at https://yk-chat-app.herokuapp.com/
