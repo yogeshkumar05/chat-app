@@ -24,7 +24,6 @@ app.use(express.static(publicDirectoryPath));
 
 
 io.on('connection', (socket) => {
-  console.log('New web socket connection');
 
   // socket.emit('countUpdated', count) // sends an event
 
@@ -37,11 +36,11 @@ io.on('connection', (socket) => {
   // io.to.emit() - emits an event to every client in the room
   // socket.broadcast.to.emit() - emits an event to every client in the room except the current client
 
-  
 
-  socket.on('join', ({username, room}, callback) => {
-    const {error, user} = addUser({id: socket.id, username, room});
-    if(error) {
+
+  socket.on('join', ({ username, room }, callback) => {
+    const { error, user } = addUser({ id: socket.id, username, room });
+    if (error) {
       return callback(error);
     }
     socket.join(user.room);
@@ -57,7 +56,7 @@ io.on('connection', (socket) => {
     callback();
   })
 
-  
+
 
   socket.on('sendMessage', (message, callback) => {
     const user = getUser(socket.id);
@@ -79,8 +78,7 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     const user = removeUser(socket.id);
-    console.log('leaving.... ', user);
-    if(user) {
+    if (user) {
       io.to(user.room).emit('message', generateMessage(`${user.username} has left`));
       io.to(user.room).emit('roomData', {
         room: user.room,
